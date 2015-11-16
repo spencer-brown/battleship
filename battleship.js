@@ -71,20 +71,21 @@ function Battleship() {
         // TODO: print map of computer board
 
         // print map of player board
-        // TODO: Add formatting, labeling rows + cols
+        console.log('  1 2 3 4 5 6 7 8 9 10');
         for (var i = 0; i < 10; i++) {
+            process.stdout.write(String.fromCharCode(i + 65) + ' ');
             if (typeof playerBoard.map[i] !== 'undefined') {
                 for (var j = 0; j < 10; j++) {
                     if (typeof playerBoard.map[i][j] === 'undefined') {
-                        process.stdout.write('-');
+                        process.stdout.write('- ');
                     } else {
                         // H, M, or -
-                        process.stdout.write(playerBoard.map[i][j].representation);
+                        process.stdout.write(playerBoard.map[i][j].representation + ' ');
                     }
                 }
             } else {
                 // print empty row
-                process.stdout.write('----------');
+                process.stdout.write('- - - - - - - - - -');
             }
             process.stdout.write('\n');
         }
