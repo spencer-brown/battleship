@@ -53,6 +53,7 @@ function Battleship() {
             process.stdout.write(' space long.\n');
 
             var coords = readlineSync.question('Where would you like to insert it? [A-J],[1-10] (ex: "B,10")', {hideEchoBack: false});
+            // TODO: Check validity - regex?
             var yxCoords = parseCoords(coords);
             var validOrientations = getValidOrientations(playerBoard.map, yxCoords, ship.size);
             // TODO: Check validity - use while loop? (validOrientations.length !== 0)
