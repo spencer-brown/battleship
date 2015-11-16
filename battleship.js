@@ -22,9 +22,10 @@ function Battleship() {
         initializeBoard(playerBoard);
 
         // set up board
-        setUpShips();
-        printGameState();
+        setUpComputerBoard();
+        setUpPlayerBoard();
 
+        printGameState();
         // start turns
     };
 
@@ -40,10 +41,7 @@ function Battleship() {
         });
     }
 
-    function setUpShips() {
-        // TODO: set up computer board
-
-        // set up player board
+    function setUpPlayerBoard() {
         console.log('For each ship, choose a starting index for the edge of the ship and an orientation');
 
         SHIPS.forEach(function(ship) {
@@ -65,6 +63,31 @@ function Battleship() {
             // insert ship
             insertShip(playerBoard.map, yxCoords, orientation, ship);
         });
+    }
+
+    function setUpComputerBoard() {
+        SHIPS.forEach(function(ship) {
+            var validOrientations = [];
+            var randomCoords;
+
+            while (validOrientations.length === 0) {
+                randomCoords = generateRandomCoords();
+                validOrientations = getValidOrientations(computerBoard.map, randomCoords, ship.size);
+            }
+
+            var randomOrientationIndex = Math.floor(Math.random() * validOrientations.length);
+            var randomOrientation = validOrientations[randomOrientationIndex];
+
+            insertShip(computerBoard.map, randomCoords, randomOrientation, ship);
+        });
+    }
+
+    function generateRandomCoords() {
+        // generates random number [0,9]
+        var randomXCoord = Math.floor(Math.random() * 10);
+        var randomYCoord = Math.floor(Math.random() * 10);
+
+        return [randomYCoord, randomXCoord];
     }
 
     function printGameState() {
