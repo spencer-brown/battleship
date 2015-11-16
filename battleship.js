@@ -258,6 +258,27 @@ function Battleship() {
     }
 
     function computerTurn() {
+        var randomCoords;
+
+        while(!validTargetCoords(playerBoard.map, randomCoords)) {
+            randomCoords = generateRandomCoords();
+        }
+
+        markShot(playerBoard, randomCoords);
+    }
+
+    function validTargetCoords(map, yxCoords) {
+        if (typeof yxCoords === 'undefined') {
+            return false;
+        }
+
+        if (map[yxCoords[0]] &&
+            map[yxCoords[0]][yxCoords[1]] &&
+            (map[yxCoords[0]][yxCoords[1]].representation === 'h' || map[yxCoords[0]][yxCoords[1]].representation === 'm')) {
+                return false;
+            }
+
+            return true;
     }
 
     function markShot(board, yxCoords) {
