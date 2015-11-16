@@ -188,7 +188,6 @@ function Battleship() {
     }
 
     function insertShip(map, coords, orientation, ship) {
-
         var i;
         switch (orientation) {
             case 'left':
