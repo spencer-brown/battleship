@@ -91,19 +91,25 @@ function Battleship() {
     }
 
     function printGameState() {
-        // TODO: print map of computer board
+        // print map of computer board
+        // TODO: Don't print ships, just markers
+        printBoard(computerBoard);
 
         // print map of player board
+        printBoard(playerBoard);
+    }
+
+    function printBoard(board) {
         console.log('  1 2 3 4 5 6 7 8 9 10');
         for (var i = 0; i < 10; i++) {
             process.stdout.write(String.fromCharCode(i + 65) + ' ');
-            if (typeof playerBoard.map[i] !== 'undefined') {
+            if (typeof board.map[i] !== 'undefined') {
                 for (var j = 0; j < 10; j++) {
-                    if (typeof playerBoard.map[i][j] === 'undefined') {
+                    if (typeof board.map[i][j] === 'undefined') {
                         process.stdout.write('- ');
                     } else {
                         // H, M, or -
-                        process.stdout.write(playerBoard.map[i][j].representation + ' ');
+                        process.stdout.write(board.map[i][j].representation + ' ');
                     }
                 }
             } else {
