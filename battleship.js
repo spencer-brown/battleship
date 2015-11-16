@@ -59,7 +59,7 @@ function Battleship() {
             var validOrientations = getValidOrientations(playerBoard.map, yxCoords, ship.size);
             // TODO: Check validity - use while loop? (validOrientations.length !== 0)
             
-            var orientationIndex = readlineSync.keyInSelect(validOrientations, 'Orientation? [don\'t press (enter)]', {cancel: false});
+            var orientationIndex = readlineSync.keyInSelect(validOrientations, 'Orientation? (just press number of selection)', {cancel: false});
             var orientation = validOrientations[orientationIndex];
 
             // insert ship
