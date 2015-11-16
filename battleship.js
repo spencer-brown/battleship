@@ -253,6 +253,7 @@ function Battleship() {
     function playerTurn() {
         var coords = readlineSync.question('Where would you like to shoot? [A-J],[1-10] (ex: "B,10")', {hideEchoBack: false});
         var yxCoords = parseCoords(coords);
+        // TODO: check that these coords have not already been hit
         markShot(computerBoard, yxCoords);
     }
 
