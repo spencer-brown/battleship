@@ -25,8 +25,13 @@ function Battleship() {
         setUpComputerBoard();
         setUpPlayerBoard();
 
-        printGameState();
         // start turns
+        while (true) {
+            printGameState();
+            playerTurn();
+            printGameState();
+            computerTurn();
+        }
     };
 
     function initializeBoard(board) {
@@ -242,6 +247,52 @@ function Battleship() {
                         representation: '*'
                     };
                 }
+        }
+    }
+
+    function playerTurn() {
+        var coords = readlineSync.question('Where would you like to shoot? [A-J],[1-10] (ex: "B,10")', {hideEchoBack: false});
+        var yxCoords = parseCoords(coords);
+        markShot(computerBoard, yxCoords);
+    }
+
+    function computerTurn() {
+    }
+
+    function markShot(board, yxCoords) {
+        var map = board.map;
+
+        if (typeof map[yxCoords[0]] === 'undefined') {
+            console.log('shot missed!');
+
+            map[yxCoords[0]] = [];
+            map[yxCoords[0]][yxCoords[1]] = {
+                representation: 'm'
+            };
+        } else {
+            if (typeof map[yxCoords[0]][yxCoords[1]] === 'undefined') {
+                console.log('shot missed!');
+
+                map[yxCoords[0]][yxCoords[1]] = {
+                    representation: 'm'
+                };
+            } else {
+                console.log('shot hit!');
+
+                map[yxCoords[0]][yxCoords[1]].representation = 'h';
+                var shipType = map[yxCoords[0]][yxCoords[1]].shipType;
+                board[shipType].hits++;
+
+                if (board[shipType].hits === board[shipType].size) {
+                    console.log('battleship sunk!');
+                    board.livingShips--;
+
+                    if (board.livingShips === 0) {
+                        console.log('Game over!');
+                        process.exit();
+                    }
+                }
+            }
         }
     }
 
