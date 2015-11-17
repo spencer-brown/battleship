@@ -12,7 +12,6 @@ var SHIPS = [
 function Battleship() {
     var computerBoard = {};
     var playerBoard = {};
-    var rl;
 
     this.startGame = function() {
         console.log('Welcome to battleship!');
