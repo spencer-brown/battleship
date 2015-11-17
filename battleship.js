@@ -28,7 +28,6 @@ function Battleship() {
         while (true) {
             printGameState();
             playerTurn();
-            printGameState();
             computerTurn();
         }
     };
@@ -105,7 +104,7 @@ function Battleship() {
             // input index + check validity
             process.stdout.write('The next ship is ');
             process.stdout.write(ship.size.toString());
-            process.stdout.write(' space long.\n');
+            process.stdout.write(' spaces long.\n');
 
             var coords = readlineSync.question('Where would you like to insert it? [A-J],[1-10] (ex: "B,10")', {hideEchoBack: false});
             // TODO: Check validity - regex?
@@ -147,25 +146,26 @@ function Battleship() {
     }
 
     function printGameState() {
-        // print map of computer board
-        // TODO: Don't print ships, just markers
-        printBoard(computerBoard);
-
-        // print map of player board
-        printBoard(playerBoard);
+        console.log('Computer Board');
+        printMap(computerBoard.map, true);
+        console.log('\nYour Board');
+        printMap(playerBoard.map, false);
     }
 
-    function printBoard(board) {
+    function printMap(map, hideShips) {
         console.log('  1 2 3 4 5 6 7 8 9 10');
         for (var i = 0; i < 10; i++) {
             process.stdout.write(String.fromCharCode(i + 65) + ' ');
-            if (typeof board.map[i] !== 'undefined') {
+            if (typeof map[i] !== 'undefined') {
                 for (var j = 0; j < 10; j++) {
-                    if (typeof board.map[i][j] === 'undefined') {
+                    if (typeof map[i][j] === 'undefined') {
                         process.stdout.write('- ');
                     } else {
-                        // H, M, or -
-                        process.stdout.write(board.map[i][j].representation + ' ');
+                        if (hideShips && map[i][j].representation === '*') {
+                            process.stdout.write('- ');
+                        } else {
+                            process.stdout.write(map[i][j].representation + ' ');
+                        }
                     }
                 }
             } else {
