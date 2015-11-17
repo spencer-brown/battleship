@@ -34,6 +34,57 @@ function Battleship() {
         }
     };
 
+    this.generateShipDistribution = function() {
+        var NUM_OF_BOARDS = 100000;
+        var distributionVector = [];
+
+        for (var i = 0; i < NUM_OF_BOARDS; i++) {
+            var randomBoard = {
+                map: []
+            };
+
+            setUpRandomBoard(randomBoard);
+            var flattenedMap = flattenMap(randomBoard.map);
+
+            // add to distribution vector
+            for (var j = 0; j < flattenedMap.length; j++) {
+                if (flattenedMap[j]) {
+                    if (distributionVector[j]) {
+                        distributionVector[j]++;
+                    } else {
+                        distributionVector[j] = 1;
+                    }
+                }
+            }
+        }
+
+        var expandedDistribution = distributionVector.map(function(occurrenceCount, i) {
+            return [i, occurrenceCount];
+        });
+
+        // sort by occurrence counts (high to low) while preserving indeces
+        expandedDistribution.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        // [[originalIndex, occurrenceCount], ...]
+        return expandedDistribution;
+    };
+
+    function indexOfMax(array) {
+        var maxIndex;
+        var maxVal = -1;
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] > maxVal) {
+                maxIndex = i;
+                maxVal = array[i];
+            }
+        }
+
+        return maxIndex;
+    }
+
     function initializeBoard(board) {
         board.livingShips = 5;
         board.map = [];
@@ -330,7 +381,26 @@ function Battleship() {
 
         return [yVal, xVal];
     }
+
+    function flattenMap(map) {
+        var flattenedMap = [];
+
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 10; j++) {
+                if (map[i] && map[i][j]) {
+                    // mark flattenedMap
+                    flattenedMap[i*10 + j] = 1;
+                }
+            }
+        }
+
+        return flattenedMap;
+    }
 }
 
 var battleship = new Battleship();
 battleship.startGame();
+
+// Generate distribution:
+// var dist = battleship.generateShipDistribution();
+// console.log(dist);
