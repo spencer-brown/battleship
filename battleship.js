@@ -21,8 +21,8 @@ function Battleship() {
         initializeBoard(computerBoard);
         initializeBoard(playerBoard);
 
-        // set up board
-        setUpComputerBoard();
+        // set up boards
+        setUpRandomBoard(computerBoard);
         setUpPlayerBoard();
 
         // start turns
@@ -71,20 +71,20 @@ function Battleship() {
         });
     }
 
-    function setUpComputerBoard() {
+    function setUpRandomBoard(board) {
         SHIPS.forEach(function(ship) {
             var validOrientations = [];
             var randomCoords;
 
             while (validOrientations.length === 0) {
                 randomCoords = generateRandomCoords();
-                validOrientations = getValidOrientations(computerBoard.map, randomCoords, ship.size);
+                validOrientations = getValidOrientations(board.map, randomCoords, ship.size);
             }
 
             var randomOrientationIndex = Math.floor(Math.random() * validOrientations.length);
             var randomOrientation = validOrientations[randomOrientationIndex];
 
-            insertShip(computerBoard.map, randomCoords, randomOrientation, ship);
+            insertShip(board.map, randomCoords, randomOrientation, ship);
         });
     }
 
